@@ -14,7 +14,7 @@ function initializeGame() {
       board[i].push("");
     }
   }
-  //console.log(board);
+  console.log(board);
 }
 
 function nextTurn() {
@@ -40,6 +40,25 @@ function expandBoard(direction) {
   // TODO: Task 2 B
   // This function adds a column or a row to the board
   // depending on the direction it gets as an argument.
+  if (direction === "LEFT") {
+    for (let i = 0; i < board.length; i++) {
+      board[i].unshift("");
+    }
+  } else if (direction === "RIGHT") {
+    for (let i = 0; i < board.length; i++) {
+      board[i].push("");
+    }
+  } else if (direction === "UP") {
+    board.unshift([]);
+    for (let i = 0; i < board.length; i++) {
+      board[0].push("");
+    }
+  } else if (direction === "DOWN") {
+    board.push([]);
+    for (let i = 0; i < board.length; i++) {
+      board[board.length - 1].push("");
+    }
+  }
 
   drawBoard();
 }
@@ -58,20 +77,18 @@ function handleClick(event) {
   // TODO: Task 2 A
   // Implement the conditions when the board should be expanded.
   // Ie when the player clicks the extreme rows or columns.
-  /* 
-    if ( ) {
-        expandBoard('LEFT');
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i][0] !== "") {
+      expandBoard("LEFT");
+    } else if (board[i][board.length - 1] !== "") {
+      expandBoard("RIGHT");
+    } else if (board[0][i] !== "") {
+      expandBoard("UP");
+    } else if (board[board.length - 1][i] !== "") {
+      expandBoard("DOWN");
     }
-    else if ( ) {
-        expandBoard('RIGHT');
-    }
-    if ( ) {
-        expandBoard('UP');
-    }
-    else if ( ) {
-        expandBoard('DOWN');
-    }
-    */
+  }
 
   nextTurn();
 }
@@ -99,6 +116,7 @@ function drawBoard() {
       createSquare(boardDiv, x, y);
     }
   }
+  console.log(board);
 }
 
 initializeGame();
